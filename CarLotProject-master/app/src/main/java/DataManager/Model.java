@@ -5,12 +5,12 @@ public class Model extends Component{
     private String modelName = new String();
     private int modelYear=0; 
     
-    public void bindToBrand(Brand brandObj) throws ComponentNotBoundToPool{
-        if(!BrandPool.get().componentIsRegisteredAtPool(brandObj)){
+    public Model(Brand brand) throws ComponentNotBoundToPool{
+        if(brand == null) return;
+        if(!BrandPool.get().componentIsRegisteredAtPool(brand)){
             throw new ComponentNotBoundToPool("The 'brand' object passed to bindToBrand does not exist inside BrandPool");
         }
-        brandObj.addChild(this);
-        
+        brand.addChild(this);
     }
     
     public Brand getBrand(){
