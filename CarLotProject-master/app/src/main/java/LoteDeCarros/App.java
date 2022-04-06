@@ -5,15 +5,18 @@ package LoteDeCarros;
 
 import DataManager.*;
 import DataManager.Pool.*;
+import DataIO.*;
 import java.util.Scanner;
 
 public class App {
+    
+
     public static Scanner lectura = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void preloadDemostration() {
+        // Demostracion altas
         try {
-            int alta = 1;
-            // Demostracion altas
+
             Brand marca = new Brand();
             marca.setBrandName("BMW");
             BrandPool.get().registerComponent(marca);
@@ -24,154 +27,107 @@ public class App {
 
             Model modeloSport = new Model(marca);
             modeloSport.setModelName("300-I");
+            modeloSport.setDoorCount(2);
+            modeloSport.setFuelCapacity(30.5);
+            modeloSport.setHasSunroof(true);
+            modeloSport.setModelYear(2018);
+            modeloSport.setSeatCount(2);
             ModelPool.get().registerComponent(modeloSport);
 
             Model modeloCasual = new Model(marca2);
             modeloCasual.setModelName("X5");
+            modeloCasual.setDoorCount(4);
+            modeloCasual.setFuelCapacity(25.5);
+            modeloCasual.setHasSunroof(true);
+            modeloCasual.setModelYear(2012);
+            modeloCasual.setSeatCount(5);
             ModelPool.get().registerComponent(modeloCasual);
 
             Vehicle carro1 = new Vehicle(modeloCasual);
-            carro1.setVehicleName("CarroHonda");
+            carro1.setColor("Rojo Rayo McQueen");
+            carro1.setMileage(432.0);
+            carro1.setVIN("NUMERO VIN");
+            carro1.setlicensePlate("2FAST4U");
             VehiclePool.get().registerComponent(carro1);
             Vehicle carro2 = new Vehicle(modeloCasual);
-            carro1.setVehicleName("KirbyCarro");
+            carro2.setColor("Azul");
+            carro2.setMileage(1000.0);
+            carro2.setVIN("NUMERO VIN2");
+            carro2.setlicensePlate("SOCCERMOM<3");
             VehiclePool.get().registerComponent(carro2);
-
-            do {
-                // Menus
-                System.out.println("Bienvenido al lote de autos");
-                System.out.print(
-                        "Ingrese 1 para dar de alta un vehiculo, inserte 2 para dar de baja un vehiculo. Si desea salir ingrese 0: ");
-                alta = lectura.nextInt();
-
-                if (alta == 1) {
-                    System.out.print("Nombre de la marca a registrar: ");
-                    Brand marcaV = new Brand();
-                    marca.setBrandName(lectura.next());
-                    BrandPool.get().registerComponent(marcaV);
-
-                    System.out.print("Nombre del modelo a registrar: ");
-                    Model modeloV = new Model(marca);
-                    modeloSport.setModelName(lectura.next());
-                    System.out.print("Año del carro a registrar: ");
-                    modeloSport.setModelYear(lectura.nextInt());
-                    ModelPool.get().registerComponent(modeloV);
-
-                    Vehicle carroV = new Vehicle(modeloV);
-                    System.out.print("Nombre del vehiculo a registrar: ");
-                    carroV.setVehicleName(lectura.next());
-                    System.out.println("Tiene quemacocos: ");
-                    carroV.setQuemacocos(lectura.nextBoolean());
-                    System.out.println("Numero de puertas del auto: ");
-                    carroV.setNumPuertas(lectura.nextInt());
-                    System.out.println("Numero de asientos: ");
-                    carroV.setAsientos(lectura.nextInt());
-                    System.out.println("Capacidad del tanque de gasolina: ");
-                    carroV.setGasolina(lectura.nextDouble());
-                    System.out.println("Kilometraje del vehiculo: ");
-                    carroV.setKilometraje(lectura.nextDouble());
-                    VehiclePool.get().registerComponent(carroV);
-
-                    // Marca carro
-                    System.out.println("Marca de Carro 1: " +
-                            carroV.getModel().getBrand().getBrandName());
-
-                    // Modelo del carro y año
-                    System.out.println("Modelo del carro y año del carro: " +
-                            carroV.getModel().getModelName() + " "
-                            + carroV.getModel().getModelYear());
-
-                    // Caracteristicas del vehiculo
-                    System.out.println("Caracteristicas del carro ingresado");
-                    System.out.println("Carro ingresado nombre: " + carroV.getVehicleName());
-                    System.out.println("Carro ingresado asiento: " + carroV.getAsientos());
-                    System.out.println("Carro ingresado quemacocos: " + carroV.getQuemacocos());
-                    System.out.println("Carro ingresado puertas: " + carroV.getNumPuertas());
-                    System.out.println("Carro ingresado gasolina: " + carroV.getGasolina());
-                    System.out.println("Carro ingresado kilometraje: " + carroV.getKilometraje());
-
-                    System.out.println("Elementos totales(Alta): " +
-                            BrandPool.get().getComponentAt(0).countChildrenRecurively());
-                }
-
-                if (alta == 2) {
-                    System.out.println(
-                            "Ingrese 1 para eliminar una marca. Ingrese 2 para eliminar un modelo. Ingrese 3 para eliminar un vehiculo: ");
-
-                    switch (lectura.nextInt()) {
-                        case 1:
-                            System.out.println("¿Que marca desea eliminar? ");
-                            for (int i = 0; i < BrandPool.get().countRegisterdComponents(); i++) {
-                                var vehicleBrand = (Brand) BrandPool.get().getComponentAt(i);
-                                System.out.println(vehicleBrand.getBrandName());
-                            }
-
-                            String marcaX = lectura.next();
-                            for (int i = 0; i < BrandPool.get().countRegisterdComponents(); i++) {
-                                var currentBrand = (Brand) BrandPool.get().getComponentAt(i);
-                                if (currentBrand.getBrandName().equals(marcaX)) {
-                                    BrandPool.get().unregisterComponent(currentBrand);
-                                }
-                            }
-
-                            System.out.println("Listo. Estas son las marcas que quedan. ");
-                            for (int i = 0; i < BrandPool.get().countRegisterdComponents(); i++) {
-                                var vehicleBrand = (Brand) BrandPool.get().getComponentAt(i);
-                                System.out.println(vehicleBrand.getBrandName());
-                            }
-                            break;
-
-                        case 2:
-                            System.out.println("¿Que modelo desea eliminar? ");
-                            for (int i = 0; i < ModelPool.get().countRegisterdComponents(); i++) {
-                                var vehicleModel = (Model) ModelPool.get().getComponentAt(i);
-                                System.out.println(vehicleModel.getModelName());
-                            }
-
-                            String modeloX = lectura.next();
-                            for (int i = 0; i < ModelPool.get().countRegisterdComponents(); i++) {
-                                var currentModel = (Model) ModelPool.get().getComponentAt(i);
-                                if (currentModel.getModelName().equals(modeloX)) {
-                                    ModelPool.get().unregisterComponent(currentModel);
-                                }
-                            }
-
-                            System.out.println("Listo. Estas son los modelos que quedan ");
-                            for (int i = 0; i < ModelPool.get().countRegisterdComponents(); i++) {
-                                var vehicleModel = (Model) ModelPool.get().getComponentAt(i);
-                                System.out.println(vehicleModel.getModelName());
-                            }
-                            break;
-                        case 3:
-                            System.out.println("¿Que vehiculo desea eliminar? ");
-                            for (int i = 0; i < VehiclePool.get().countRegisterdComponents(); i++) {
-                                var vehicleVehicle = (Vehicle) VehiclePool.get().getComponentAt(i);
-                                System.out.println(vehicleVehicle.getVehicleName());
-                                // System.out.println(VehiclePool.get().countRegisterdComponents());
-                            }
-
-                            String vehiculoX = lectura.next();
-                            for (int i = 0; i < VehiclePool.get().countRegisterdComponents(); i++) {
-                                var currentVehicle = (Vehicle) VehiclePool.get().getComponentAt(i);
-                                if (currentVehicle.getVehicleName().equals(vehiculoX)) {
-                                    VehiclePool.get().unregisterComponent(currentVehicle);
-                                }
-                            }
-
-                            System.out.println("Listo. Estas son los modelos que quedan ");
-                            for (int i = 0; i < VehiclePool.get().countRegisterdComponents(); i++) {
-                                var vehicleVehicle = (Vehicle) VehiclePool.get().getComponentAt(i);
-                                System.out.println(vehicleVehicle.getVehicleName());
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            } while (alta != 0);
-
         } catch (ComponentNotBoundToPool ex) {
             System.out.println("Error: " + ex.getMessage());
         }
+
+    }
+
+    public static ICapture selectTargetGroup() {
+        String prompt = new String();
+        final int kBrands = 1;
+        final int kModels = 2;
+        final int kVehicles = 3;
+        final int kCancel = 4;
+        prompt += "Seleccione que elemento desea consultar o alterar:\n";
+        prompt += "1) Marcas\n";
+        prompt += "2) Modelos\n";
+        prompt += "3) Vehiculos\n";
+        prompt += "4) Cancelar\n\n";
+        prompt += "Input: ";
+        var cScanner = new ConstrainedScanner(prompt, 1, 4);
+        for (;;) {
+            switch (cScanner.getValue()) {
+                case kBrands:
+                    return new BrandCapture();
+                case kModels:
+                    return new ModelCapture();
+                case kVehicles:
+                    return new VehicleCapture();
+                case kCancel:
+                    System.exit(0);
+            }
+        }
+    }
+
+    public static void selectOperation(ICapture targetGroup) {
+        String prompt = new String();
+        final int kCreate = 1;
+        final int kRead = 2;
+        final int kUpdate = 3;
+        final int kDelete = 4;
+        final int kCancel = 5;
+        prompt += "Selecciona la operacion que deseas realizar:\n";
+        prompt += "1) Crear\n";
+        prompt += "2) Leer\n";
+        prompt += "3) Modificar\n";
+        prompt += "4) Borrar\n";
+        prompt += "5) Cancelar\n\n";
+        prompt += "Input: ";
+        var cScanner = new ConstrainedScanner(prompt, 1, 4);
+        switch (cScanner.getValue()) {
+            case kCreate:
+                targetGroup.onCreate();
+                return;
+            case kRead:
+                targetGroup.onBrowse(false);
+                return;
+            case kUpdate:
+                targetGroup.onUpdate();
+                return;
+            case kDelete:
+                targetGroup.onDelete();
+                return;
+            case kCancel:
+                return;
+            
+        }
+    }
+
+    public static void main(String[] args) {
+        preloadDemostration();
+        for (;;) {
+            ICapture captureObj = selectTargetGroup();
+            selectOperation(captureObj);
+        }
+
     }
 }
