@@ -4,12 +4,10 @@ import DataManager.Pool.*;
 
 public class Vehicle extends Component {
     // TODO: Add fields and get/set methods
-    private String vehicleName = new String();
-    private Boolean quemacocos = false;
-    private Integer numPuertas = 0;
-    private Integer asientos = 0;
-    private Double kilometraje = 0.0;
-    private Double gasolina = 0.0;
+    private String VIN = new String();
+    private String licensePlate = new String();
+    private String color = new String();
+    private Double mileage = 0.0;
 
     public Vehicle(Model model) throws ComponentNotBoundToPool {
         if (model == null)
@@ -23,53 +21,37 @@ public class Vehicle extends Component {
 
     public Model getModel() {
         return (Model) getParent();
+    };
+
+    public String getVIN() {
+        return this.VIN;
     }
 
-    public String getVehicleName() {
-        return this.vehicleName;
+    public void setVIN(String numVIN) {
+        this.VIN = numVIN;
     }
 
-    public void setVehicleName(String name) {
-        this.vehicleName = name;
+    public String getLicensePlate() {
+        return this.licensePlate;
     }
 
-    public Boolean getQuemacocos() {
-        return this.quemacocos;
+    public void setlicensePlate(String newLicensePlate) {
+        this.licensePlate = newLicensePlate;
     }
 
-    public void setQuemacocos(Boolean cocos) {
-        this.quemacocos = cocos;
+    public String getColor() {
+        return this.color;
     }
 
-    public Integer getNumPuertas() {
-        return numPuertas;
+    public void setColor(String newColor) {
+        this.color = newColor;
     }
 
-    public void setNumPuertas(Integer puertas) {
-        this.numPuertas = puertas;
+    public Double getMileage() {
+        return this.mileage;
     }
 
-    public Integer getAsientos() {
-        return asientos;
-    }
-
-    public void setAsientos(Integer asientos) {
-        this.asientos = asientos;
-    }
-
-    public Double getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(Double kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-
-    public Double getGasolina() {
-        return gasolina;
-    }
-
-    public void setGasolina(Double gasolina) {
-        this.gasolina = gasolina;
+    public void setMileage(Double newMillage) {
+        this.mileage = newMillage;
     }
 }
